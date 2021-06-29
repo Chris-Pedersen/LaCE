@@ -379,6 +379,11 @@ class Likelihood(object):
         """Compute log likelihood plus log priors for input values
             - if return_blob==True, it will return also extra information"""
 
+        # check for NaNs in input values
+        if np.isnan(np.sum(values)):
+            print('NaN values =',values)
+            return -np.inf
+
         # Always force parameter to be within range (for now)
         if (max(values) > 1.0) or (min(values) < 0.0):
             if return_blob:
